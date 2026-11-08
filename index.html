@@ -1,0 +1,85 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>PaperPot</title>
+  <meta name="description" content="Design a pot from stacked slab sections, see it in 3D, and print true-to-scale paper templates with clay shrinkage built in.">
+  <link rel="icon" href="logo.svg" type="image/svg+xml">
+  <link rel="stylesheet" href="style.css">
+  <style id="print-size"></style>
+  <script type="importmap">
+    {
+      "imports": {
+        "three": "https://cdn.jsdelivr.net/npm/three@0.170.0/build/three.module.js",
+        "three/addons/": "https://cdn.jsdelivr.net/npm/three@0.170.0/examples/jsm/"
+      }
+    }
+  </script>
+</head>
+<body>
+  <header class="bar">
+    <img src="logo.svg" alt="" class="logo" width="24" height="24">
+    <h1>PaperPot</h1>
+    <input type="text" id="potName" class="pot-name" placeholder="Pot name" aria-label="Pot name, printed on every page" maxlength="60">
+    <select id="preset" aria-label="Start from a preset"></select>
+    <button type="button" id="undo" title="Undo (Ctrl+Z)">Undo</button>
+    <button type="button" id="redo" title="Redo (Ctrl+Shift+Z)">Redo</button>
+    <span class="spacer"></span>
+    <div class="seg" role="group" aria-label="Units">
+      <button type="button" data-units="mm">mm</button>
+      <button type="button" data-units="in">in</button>
+    </div>
+  </header>
+
+  <main class="layout">
+    <aside class="side">
+      <section>
+        <h2>Parts</h2>
+        <div id="parts"></div>
+        <div class="add-row">
+          <span>New part:</span>
+          <button type="button" data-loose="round">Wall</button>
+          <button type="button" data-loose="facet">Faceted wall</button>
+          <button type="button" data-loose="base">Base</button>
+          <button type="button" data-loose="foot">Foot</button>
+          <button type="button" data-loose="lid">Lid</button>
+        </div>
+      </section>
+      <section id="panel" class="panel"></section>
+      <section id="settings"></section>
+    </aside>
+
+    <div class="work">
+      <div class="viewer">
+        <div id="view" class="view"><div id="tip" class="tip" hidden></div></div>
+        <div class="view-tools">
+          <button type="button" data-view="iso">3/4</button>
+          <button type="button" data-view="front">Front</button>
+          <button type="button" data-view="top">Top</button>
+          <button type="button" data-view="below">Below</button>
+          <span id="overall" class="overall"></span>
+        </div>
+        <p class="view-hint">Drag to rotate, scroll to zoom, right-drag to pan. Click a rim to select an edge.</p>
+        <div id="message" class="message"></div>
+      </div>
+
+      <section class="output" aria-label="Templates">
+        <div class="out-head">
+          <h2>Templates</h2>
+          <div class="actions">
+            <button type="button" class="primary" id="printBtn">Print</button>
+            <button type="button" id="svgBtn">Download SVG</button>
+            <button type="button" id="shareBtn">Copy link</button>
+          </div>
+        </div>
+        <div id="summary" class="summary"></div>
+        <p class="print-hint">Print at <b>Actual size (100%)</b> with <b>Fit to page</b> turned off, then check that the bar at the top of a page measures 2&nbsp;in (50.8&nbsp;mm).</p>
+        <div id="pages" class="pages"></div>
+      </section>
+    </div>
+  </main>
+
+  <script type="module" src="app.js"></script>
+</body>
+</html>
